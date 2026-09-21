@@ -1,0 +1,3 @@
+*.pem
+*.ini
+.env.local
