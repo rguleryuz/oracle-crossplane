@@ -1,0 +1,8 @@
+apiVersion: platform.example.com/v1alpha1
+kind: NoSQLTable
+metadata:
+  name: demo-table
+  namespace: demo
+spec:
+  tableName: crossplane_demo
+  ddl: "CREATE TABLE IF NOT EXISTS crossplane_demo (id INTEGER, name STRING, PRIMARY KEY (id))"
