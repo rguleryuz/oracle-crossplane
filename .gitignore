@@ -1,3 +1,4 @@
 *.pem
 *.ini
 .env.local
+.omc/
