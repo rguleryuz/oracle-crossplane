@@ -3,6 +3,8 @@ kind: ProviderConfig
 metadata:
   name: default
   namespace: demo
+  annotations:
+    kustomize.toolkit.fluxcd.io/validate: skip
 spec:
   credentials:
     source: Secret
