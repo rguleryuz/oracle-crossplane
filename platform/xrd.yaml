@@ -1,0 +1,33 @@
+apiVersion: apiextensions.crossplane.io/v2
+kind: CompositeResourceDefinition
+metadata:
+  name: nosqltables.platform.example.com
+spec:
+  scope: Namespaced
+  group: platform.example.com
+  names:
+    kind: NoSQLTable
+    plural: nosqltables
+  versions:
+    - name: v1alpha1
+      served: true
+      referenceable: true
+      schema:
+        openAPIV3Schema:
+          type: object
+          properties:
+            spec:
+              type: object
+              required: ["tableName", "ddl"]
+              properties:
+                tableName:
+                  type: string
+                ddl:
+                  type: string
+            status:
+              type: object
+              properties:
+                tableOCID:
+                  type: string
+                lifecycleState:
+                  type: string

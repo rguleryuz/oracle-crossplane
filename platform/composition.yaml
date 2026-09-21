@@ -1,0 +1,45 @@
+apiVersion: apiextensions.crossplane.io/v1
+kind: Composition
+metadata:
+  name: nosql-free
+spec:
+  compositeTypeRef:
+    apiVersion: platform.example.com/v1alpha1
+    kind: NoSQLTable
+  mode: Pipeline
+  pipeline:
+    - step: patch-and-transform
+      functionRef:
+        name: function-patch-and-transform
+      input:
+        apiVersion: pt.fn.crossplane.io/v1beta1
+        kind: Resources
+        resources:
+          - name: table
+            base:
+              apiVersion: nosql.oci.m.upbound.io/v1alpha1
+              kind: Table
+              spec:
+                providerConfigRef:
+                  kind: ProviderConfig
+                  name: default
+                forProvider:
+                  compartmentId: ocid1.compartment.oc1..aaaaaaaawo6bbg5hypi6hqzsbeovskedxxxxe6sjdgzyqoqa5zzzfx7dfllq
+                  isAutoReclaimable: true
+                  tableLimits:
+                    - maxReadUnits: 50
+                      maxWriteUnits: 50
+                      maxStorageInGbs: 25
+            patches:
+              - type: FromCompositeFieldPath
+                fromFieldPath: spec.tableName
+                toFieldPath: spec.forProvider.name
+              - type: FromCompositeFieldPath
+                fromFieldPath: spec.ddl
+                toFieldPath: spec.forProvider.ddlStatement
+              - type: ToCompositeFieldPath
+                fromFieldPath: status.atProvider.id
+                toFieldPath: status.tableOCID
+              - type: ToCompositeFieldPath
+                fromFieldPath: status.atProvider.state
+                toFieldPath: status.lifecycleState
