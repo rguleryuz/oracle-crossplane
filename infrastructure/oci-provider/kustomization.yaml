@@ -4,4 +4,4 @@ resources:
   - provider-family.yaml
   - provider-nosql.yaml
   - function-patch-and-transform.yaml
-  - providerconfig.yaml
+  # providerconfig.yaml re-added once the OCI provider CRDs are registered
